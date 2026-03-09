@@ -696,8 +696,8 @@ export default function TerminalGame() {
     );
   };
 
-  const C = { textAlign: "center" };
-  const L = { textAlign: "left" };
+  const C: React.CSSProperties = { textAlign: "center" };
+  const L: React.CSSProperties = { textAlign: "left" };
   const promptStyle: React.CSSProperties = { color: "#5a7a5a", fontSize: 11, letterSpacing: 2, marginBottom: 24, ...C };
   const tagStyle: React.CSSProperties    = { color: "#556655", fontSize: 11, marginBottom: 4, ...L };
 
