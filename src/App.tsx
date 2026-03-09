@@ -557,14 +557,14 @@ export default function TerminalGame() {
     );
   };
 
-  const promptStyle = {
+  const promptStyle: React.CSSProperties = {
     color: '#5a7a5a',
     fontSize: 11,
     letterSpacing: 2,
     marginBottom: 24,
     textAlign: 'left',
   };
-  const tagStyle = {
+  const tagStyle: React.CSSProperties = {
     color: '#556655',
     fontSize: 11,
     marginBottom: 4,
@@ -752,7 +752,7 @@ export default function TerminalGame() {
               {selectedQ.full}
             </div>
             {SPEAKERS.map((s, i) => {
-              const hasAnswer = !!selectedQ.answers[s.id];
+              const hasAnswer = !!selectedQ.answers[s.id as keyof typeof selectedQ.answers];
               return (
                 <div
                   key={s.id}
@@ -970,7 +970,7 @@ export default function TerminalGame() {
                     fontSize: 12,
                   }}
                 >
-                  {renderAnswerLines(s.id, selectedQ.answers[s.id])}
+                  {renderAnswerLines(s.id, selectedQ.answers[s.id as keyof typeof selectedQ.answers])}
                 </div>
               </div>
             ))}
@@ -996,7 +996,7 @@ export default function TerminalGame() {
               DID NOT REPLY TO THIS QUESTION:
             </div>
             <div style={{ color: '#7a8a7a', fontSize: 11, textAlign: 'left' }}>
-              {SPEAKERS.filter((s) => !selectedQ.answers[s.id])
+              {SPEAKERS.filter((s) => !selectedQ.answers[s.id as keyof typeof selectedQ.answers])
                 .map((s) => s.name)
                 .join('  ·  ') || 'everyone responded'}
             </div>
