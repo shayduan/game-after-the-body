@@ -448,8 +448,10 @@ export default function TerminalGame() {
   const [screen, setScreen] = useState('intro');
   const [introLines, setIntroLines] = useState([]);
   const [introReady, setIntroReady] = useState(false);
-  const [selectedQ, setSelectedQ] = useState(null);
-  const [selectedS, setSelectedS] = useState(null);
+  // const [selectedQ, setSelectedQ] = useState(null);
+  // const [selectedS, setSelectedS] = useState(null);
+  const [selectedQ, setSelectedQ] = useState<typeof QUESTIONS[0] | null>(null);
+  const [selectedS, setSelectedS] = useState<typeof SPEAKERS[0] | null>(null);
   const [qCursor, setQCursor] = useState(0);
   const [sCursor, setSCursor] = useState(0);
   const [blink, setBlink] = useState(true);
