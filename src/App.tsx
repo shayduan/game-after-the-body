@@ -627,7 +627,7 @@ export default function TerminalGame() {
   const renderXrefPanel = () => {
     if (!xrefPanel) return null;
     const { keyword, type, refs, fromSpeakerId, fromQId } = xrefPanel;
-    const panelBase = {
+    const panelBase: React.CSSProperties = {
       position: "absolute", bottom: 0, left: 0, right: 0,
       background: "#080d08",
       borderTop: "1px solid #1a3a1a",
