@@ -107,7 +107,8 @@ export default function IntroScreen({
   // — Skip animation: returning user, show everything at once —
   if (skipAnimation) {
     const allLines = [
-      ...SPLASH_LINES.map((l) => ({ text: l, dim: true })),
+      { text: "─────────────────────────────────────────────", dim: false },
+      ...SPLASH_LINES.map((l) => ({ text: l, dim: false })),
       { text: "─────────────────────────────────────────────", dim: false },
       { text: "", dim: false },
       {
