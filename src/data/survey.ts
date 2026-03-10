@@ -148,6 +148,16 @@ export const SPEAKER_POSITIONS: Record<
   claire: { individual: 4, liberate: -2 },
 };
 
+export const SPEAKER_SHORT_TITLES: Record<string, string> = {
+  chen: "CEO",
+  yolanda: "SURROGATE",
+  kessler: "MINISTER",
+  river: "BORN VIA",
+  osei: "PROFESSOR",
+  agnes: "GRANDMOTHER",
+  claire: "OPS MGR",
+};
+
 export const SPEAKER_QUOTES: Record<string, string> = {
   chen: '"The biology was always just the delivery method."',
   yolanda:
@@ -164,75 +174,75 @@ export const QUADRANT_RESULTS: Record<Quadrant, QuadrantResult> = {
     label: "INDIVIDUAL · LIBERATES",
     description:
       "You locate this technology's meaning in the choices it opens for individuals — burdens removed, futures unlocked. This is the tradition of liberal bioethics and mainstream reproductive rights advocacy. The question your position leaves open: who owns the infrastructure of those choices, and what happens to people like Yolanda?",
-    philosopher: {
+    analyst: {
       name: "John Stuart Mill",
       thought:
-        '"Over his own body and mind, the individual is sovereign." — On Liberty (1859). The foundation of reproductive autonomy as a right of self-ownership.',
+        '"Over his own body and mind, the individual is sovereign." — On Liberty (1859). The philosophical foundation of reproductive autonomy as a right of self-ownership; the individual is the unit of analysis, and freedom is measured by what they can choose.',
     },
-    politician: {
+    practitioner: {
       name: "Ruth Bader Ginsburg",
       thought:
-        "Framed reproductive rights as a matter of equal citizenship — the right to control one's own body as a prerequisite for equal participation in public life.",
+        "Framed reproductive rights as equal citizenship in practice — the right to control one's body as a prerequisite for equal participation in public life. Argued and won cases that made this framework law.",
     },
   },
   SL: {
     label: "STRUCTURAL · LIBERATES",
     description:
       "You want genuine liberation, which means changing who controls the technology, not just who can access it. Rights protect choices; justice asks whether the conditions for real choice exist. Firestone imagined this technology. She also said it only matters if women hold it.",
-    philosopher: {
+    analyst: {
       name: "Shulamith Firestone",
       thought:
-        '"The seizure of the means of reproduction" — The Dialectic of Sex (1970). Liberation requires collective control over reproductive technology, not merely access to it.',
+        '"The seizure of the means of reproduction" — The Dialectic of Sex (1970). Argued that reproductive technology could end patriarchy, but only if women collectively held it. Analyzed the structure of reproductive oppression with precision; did not live to see whether her prescription held.',
     },
-    politician: {
+    practitioner: {
       name: "Loretta Ross",
       thought:
-        "Co-founder of the reproductive justice framework: the right to have children, not have children, and parent in safe environments. A structural critique that goes beyond individual choice.",
+        "Co-founded the reproductive justice framework: the right to have children, not have children, and parent in safe environments. Moved the analysis from individual rights into structural organizing — built coalitions, changed policy, and insisted that justice required addressing the conditions that make choice real or fictional.",
     },
   },
   IC: {
     label: "INDIVIDUAL · CONTROLS",
     description:
       "You reason from outcomes — reduced friction, measurable gains, better numbers. By those measures, the technology has delivered. The question is whether individual-level improvements remain meaningful inside a system deploying the same infrastructure for other purposes elsewhere.",
-    philosopher: {
+    analyst: {
       name: "Frederick Winslow Taylor",
       thought:
-        "Scientific management: the body as a system to be optimized for productivity. Reproductive friction as an inefficiency to be engineered away.",
+        "Scientific management (1911): the body as a system to be optimized for productivity. Reproductive friction — leave, modified duties, informal accommodations — as an inefficiency to be engineered away. Taylor never wrote about reproduction. He didn't have to.",
     },
-    politician: {
+    practitioner: {
       name: "Sheryl Sandberg",
       thought:
-        "Lean In (2013): women should adapt individually to existing structures. Progress measured in executive representation, not in who owns the machine.",
+        "Lean In (2013): women should adapt individually to existing structures; progress is measured in executive representation and personal advancement. Deployed this framework from inside one of the most powerful companies in the world, then watched it become policy in boardrooms globally.",
     },
   },
   SC: {
     label: "STRUCTURAL · CONTROLS",
     description:
-      "You see power finding a new mechanism. The history of reproductive technology is the history of states managing populations — eugenics, forced sterilizations, natalist subsidies. What Kessler calls 'enrollment incentives' has a long history under different names.",
-    philosopher: {
+      "You see power finding a new mechanism. The history of reproductive technology is the history of states managing populations. What Kessler calls 'enrollment incentives' has a long history under different names. The same analytical framework can be used to expose this — or to run it.",
+    analyst: {
       name: "Michel Foucault",
       thought:
-        "Biopolitics: the management of populations through the administration of life itself. The body as a site of state power, reproduction as a resource to be optimized.",
+        "Biopolitics — The History of Sexuality (1976): the management of populations through the administration of life itself. The body as a site of state power, reproduction as a resource to be optimized. Foucault named the mechanism. He did not endorse it.",
     },
-    politician: {
+    practitioner: {
       name: "Viktor Orbán",
       thought:
-        "Hungary's family policy offers cash incentives for births, explicitly framed as a demographic strategy. The state decides which reproduction to subsidize. The technology is neutral; the policy is not.",
+        "Hungary's family policy offers cash incentives, tax exemptions, and subsidized loans for births — explicitly framed as a demographic strategy to avoid immigration. The state decides which reproduction to subsidize, and which populations to grow. The ExoGestation System is a more efficient version of the same instrument.",
     },
   },
   center: {
     label: "UNRESOLVED",
     description:
       "You sit near the center of every tension this technology surfaces. That is not a failure of conviction — it may be the most honest position available. The people at the edges of this grid are certain. Certainty, in this room, is its own kind of warning.",
-    philosopher: {
+    analyst: {
       name: "Hannah Arendt",
       thought:
-        '"Judgment" in The Life of the Mind: the capacity to think in unprecedented situations without applying existing rules. When there is no precedent, the hardest thing is to think at all.',
+        '"Judgment" in The Life of the Mind: the capacity to think in unprecedented situations without applying pre-existing rules. When there is no precedent, the hardest and most necessary thing is to think at all — without retreating into ideology.',
     },
-    politician: {
+    practitioner: {
       name: "(no clear alignment)",
       thought:
-        "You resist easy political categorization. The speakers in this room who are most certain tend to have the most to gain from their certainty.",
+        "You resist easy political categorization. The speakers in this room who are most certain tend to have the most to gain from their certainty. You don't.",
     },
   },
 };

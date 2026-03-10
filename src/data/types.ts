@@ -5,12 +5,7 @@ export type AnswerSegment = string | RedactedSegment;
 export type AnswerLine = typeof SILENCE | string | AnswerSegment[];
 export type AnswerLines = AnswerLine[] | null;
 
-export type Speaker = {
-  id: string;
-  name: string;
-  title: string;
-  color: string;
-};
+export type Speaker = { id: string; name: string; title: string; color: string };
 
 export type Question = {
   id: number;
@@ -19,21 +14,13 @@ export type Question = {
   answers: Record<string, AnswerLines>;
 };
 
-export type XrefRef = {
-  speakerId: string;
-  questionId: number;
-  excerpt: string;
-};
+export type XrefRef = { speakerId: string; questionId: number; excerpt: string };
 export type XrefEntry = { type: "panel" | "chain"; refs: XrefRef[] };
 
 export type Screen =
-  | "intro"
-  | "questions"
-  | "speakers"
-  | "answer"
-  | "all"
-  | "survey"
-  | "result";
+  | "splash1" | "splash2"
+  | "intro" | "questions" | "speakers"
+  | "answer" | "all" | "survey" | "result";
 
 export type SurveyResult = { individual: number; liberate: number };
 
@@ -42,6 +29,6 @@ export type Quadrant = "IL" | "SL" | "IC" | "SC" | "center";
 export type QuadrantResult = {
   label: string;
   description: string;
-  philosopher: { name: string; thought: string };
-  politician: { name: string; thought: string };
+  analyst:      { name: string; thought: string };
+  practitioner: { name: string; thought: string };
 };

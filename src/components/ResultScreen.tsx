@@ -36,7 +36,6 @@ export default function ResultScreen({
         YOUR POSITION
       </div>
 
-      {/* Position label — prominent but not overwhelming */}
       <div
         style={{
           color: "#4ade80",
@@ -50,7 +49,6 @@ export default function ResultScreen({
         {qr.label}
       </div>
 
-      {/* Compass — always shows voices with names */}
       <div style={{ ...C }}>
         <Compass result={surveyResult} />
       </div>
@@ -62,69 +60,109 @@ export default function ResultScreen({
           fontSize: 12,
           lineHeight: 1.85,
           maxWidth: 560,
-          margin: "20px auto",
+          margin: "16px auto 24px auto",
           ...C,
         }}
       >
         {qr.description}
       </div>
 
-      {/* Philosopher + Politician */}
-      <div
-        style={{
-          display: "flex",
-          gap: 12,
-          margin: "20px auto",
-          maxWidth: 560,
-          flexWrap: "wrap",
-        }}
-      >
-        {[
-          { label: "CLOSEST PHILOSOPHER", data: qr.philosopher },
-          { label: "CLOSEST POLITICIAN", data: qr.politician },
-        ].map(({ label, data }) => (
+      {/* Analyst + Practitioner */}
+      <div style={{ maxWidth: 560, margin: "0 auto 24px auto" }}>
+        {/* How this position analyzes */}
+        <div
+          style={{
+            marginBottom: 10,
+            padding: "14px 16px",
+            border: "1px solid #1a2a1a",
+            borderRadius: 2,
+          }}
+        >
           <div
-            key={label}
             style={{
-              flex: 1,
-              minWidth: 200,
-              border: "1px solid #1a2a1a",
-              padding: "12px 14px",
-              borderRadius: 2,
+              color: "#4a6a4a",
+              fontSize: 9,
+              letterSpacing: 2,
+              marginBottom: 10,
             }}
           >
-            <div
-              style={{
-                color: "#4a6a4a",
-                fontSize: 9,
-                letterSpacing: 2,
-                marginBottom: 8,
-              }}
-            >
-              {label}
-            </div>
-            <div
-              style={{
-                color: "#c8e0a0",
-                fontSize: 12,
-                fontWeight: "bold",
-                marginBottom: 6,
-              }}
-            >
-              {data.name}
-            </div>
-            <div
-              style={{
-                color: "#7a9068",
-                fontSize: 11,
-                lineHeight: 1.65,
-                fontStyle: "italic",
-              }}
-            >
-              {data.thought}
-            </div>
+            HOW THIS POSITION ANALYZES THE WORLD
           </div>
-        ))}
+          <div
+            style={{
+              color: "#c8e0a0",
+              fontSize: 12,
+              fontWeight: "bold",
+              marginBottom: 6,
+            }}
+          >
+            {qr.analyst.name}
+          </div>
+          <div
+            style={{
+              color: "#7a9068",
+              fontSize: 11,
+              lineHeight: 1.7,
+              fontStyle: "italic",
+            }}
+          >
+            {qr.analyst.thought}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div
+          style={{
+            color: "#2a3a2a",
+            fontSize: 10,
+            letterSpacing: 2,
+            ...C,
+            margin: "10px 0",
+            fontStyle: "italic",
+          }}
+        >
+          The same framework. Different uses.
+        </div>
+
+        {/* How this position acts */}
+        <div
+          style={{
+            padding: "14px 16px",
+            border: "1px solid #1a2a1a",
+            borderRadius: 2,
+          }}
+        >
+          <div
+            style={{
+              color: "#4a6a4a",
+              fontSize: 9,
+              letterSpacing: 2,
+              marginBottom: 10,
+            }}
+          >
+            HOW THIS POSITION ACTS IN THE WORLD
+          </div>
+          <div
+            style={{
+              color: "#c8e0a0",
+              fontSize: 12,
+              fontWeight: "bold",
+              marginBottom: 6,
+            }}
+          >
+            {qr.practitioner.name}
+          </div>
+          <div
+            style={{
+              color: "#7a9068",
+              fontSize: 11,
+              lineHeight: 1.7,
+              fontStyle: "italic",
+            }}
+          >
+            {qr.practitioner.thought}
+          </div>
+        </div>
       </div>
 
       {/* Closest voice */}

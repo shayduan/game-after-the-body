@@ -1,12 +1,12 @@
 import React from "react";
 import { SPEAKERS } from "../data/speakers";
-import { SPEAKER_POSITIONS } from "../data/survey";
+import { SPEAKER_POSITIONS, SPEAKER_SHORT_TITLES } from "../data/survey";
 import type { SurveyResult } from "../data/types";
 
 type Props = { result: SurveyResult };
 
 export default function Compass({ result }: Props) {
-  const SIZE = 220;
+  const SIZE = 240;
   const toX = (s: number) => ((s + 6) / 12) * SIZE;
   const toY = (s: number) => (1 - (s + 6) / 12) * SIZE;
 
@@ -46,6 +46,7 @@ export default function Compass({ result }: Props) {
             flexShrink: 0,
           }}
         >
+          {/* Axis lines */}
           <div
             style={{
               position: "absolute",
@@ -66,6 +67,7 @@ export default function Compass({ result }: Props) {
               background: "#142214",
             }}
           />
+          {/* Quadrant labels */}
           <div
             style={{
               position: "absolute",
@@ -115,10 +117,15 @@ export default function Compass({ result }: Props) {
             IC
           </div>
 
+          {/* Speaker dots + name + title */}
           {SPEAKERS.map((s) => {
             const pos = SPEAKER_POSITIONS[s.id];
             const x = toX(pos.individual);
             const y = toY(pos.liberate);
+            const lastName = s.name.split(" ").slice(-1)[0];
+            const shortTitle = SPEAKER_SHORT_TITLES[s.id];
+            // nudge label left if near right edge
+            const nearRight = x > SIZE * 0.72;
             return (
               <React.Fragment key={s.id}>
                 <div
@@ -131,36 +138,34 @@ export default function Compass({ result }: Props) {
                     borderRadius: "50%",
                     background: s.color,
                     transform: "translate(-50%,-50%)",
-                    opacity: 0.85,
+                    opacity: 0.9,
                     zIndex: 1,
                   }}
                 />
                 <div
                   style={{
                     position: "absolute",
-                    left: x + 5,
-                    top: y - 8,
+                    left: nearRight ? x - 4 : x + 6,
+                    top: y - 14,
+                    transform: nearRight ? "translateX(-100%)" : undefined,
                     color: s.color,
                     fontSize: 7,
+                    lineHeight: 1.4,
                     whiteSpace: "nowrap",
-                    opacity: 0.7,
+                    opacity: 0.75,
                     pointerEvents: "none",
                     zIndex: 2,
-                    textShadow: "0 0 4px #000",
+                    textShadow: "0 0 6px #000, 0 0 3px #000",
                   }}
                 >
-                  {
-                    s.name.split(" ")[
-                      s.name.startsWith("DR.") || s.name.startsWith("MINISTER")
-                        ? 2
-                        : 0
-                    ]
-                  }
+                  <div>{lastName}</div>
+                  <div style={{ opacity: 0.6 }}>{shortTitle}</div>
                 </div>
               </React.Fragment>
             );
           })}
 
+          {/* Player dot */}
           <div
             style={{
               position: "absolute",
@@ -175,6 +180,22 @@ export default function Compass({ result }: Props) {
               zIndex: 3,
             }}
           />
+          {/* YOU label */}
+          <div
+            style={{
+              position: "absolute",
+              left: toX(result.individual) + 8,
+              top: toY(result.liberate) - 8,
+              color: "#ffffff",
+              fontSize: 7,
+              opacity: 0.8,
+              pointerEvents: "none",
+              zIndex: 4,
+              textShadow: "0 0 6px #000",
+            }}
+          >
+            YOU
+          </div>
         </div>
         <div
           style={{
@@ -190,50 +211,6 @@ export default function Compass({ result }: Props) {
       </div>
       <div style={{ color: "#5a8a5a", fontSize: 10, letterSpacing: 2 }}>
         CONTROLS
-      </div>
-
-      {/* Legend */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "4px 14px",
-          justifyContent: "center",
-          marginTop: 8,
-          maxWidth: 300,
-        }}
-      >
-        {SPEAKERS.map((s) => (
-          <div
-            key={s.id}
-            style={{ display: "flex", alignItems: "center", gap: 4 }}
-          >
-            <div
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: s.color,
-                flexShrink: 0,
-              }}
-            />
-            <span style={{ color: s.color, fontSize: 9, opacity: 0.75 }}>
-              {s.name}
-            </span>
-          </div>
-        ))}
-        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              background: "#fff",
-              flexShrink: 0,
-            }}
-          />
-          <span style={{ color: "#aaa", fontSize: 9 }}>YOU</span>
-        </div>
       </div>
     </div>
   );

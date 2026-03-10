@@ -10,7 +10,8 @@ import {
 } from "./data/survey";
 import { CROSSREFS } from "./data/crossrefs";
 
-import IntroScreen from "./components/IntroScreen";
+import SplashScreen from "./components/SplashScreen";
+import IntroScreen, { INTRO_LINES_ANIMATED } from "./components/IntroScreen";
 import QuestionsScreen from "./components/QuestionsScreen";
 import SpeakersScreen from "./components/SpeakersScreen";
 import AnswerView from "./components/AnswerView";
@@ -18,38 +19,21 @@ import XrefPanel, { type XrefPanelState } from "./components/XrefPanel";
 import SurveyScreen from "./components/SurveyScreen";
 import ResultScreen from "./components/ResultScreen";
 
-const INTRO_LINE_COUNT = 14; // matches INTRO_LINES in IntroScreen
-
 export default function App() {
-  // ── Navigation ──────────────────────────────────────────────────
-  const [screen, setScreen] = useState<Screen>("intro");
+  // ── Navigation ───────────────────────────────────────────────────
+  const [screen, setScreen] = useState<Screen>("splash1");
   const [qCursor, setQCursor] = useState(0);
   const [sCursor, setSCursor] = useState(0);
   const [introCursor, setIntroCursor] = useState(0);
   const [selectedQ, setSelectedQ] = useState<Question | null>(null);
   const [selectedS, setSelectedS] = useState<Speaker | null>(null);
+  const [hasSeenIntro, setHasSeenIntro] = useState(false);
 
-  // ── Intro animation ──────────────────────────────────────────────
+  // ── Intro animation ───────────────────────────────────────────────
   const [introLines, setIntroLines] = useState<string[]>([]);
   const [introReady, setIntroReady] = useState(false);
   const [blink, setBlink] = useState(true);
   const lineTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  const INTRO_LINES = [
-    "AFTER THE BODY",
-    "An Interview in Seven Voices",
-    "",
-    "─────────────────────────────────────────────",
-    "",
-    "The ExoGestation System has been commercially available",
-    "for three years. The following individuals agreed to be",
-    "interviewed on the condition of thematic anonymity.",
-    "",
-    "The questions were the same for everyone.",
-    "Not everyone answered.",
-    "",
-    "─────────────────────────────────────────────",
-  ];
 
   useEffect(() => {
     const t = setInterval(() => setBlink((b) => !b), 530);
@@ -57,25 +41,25 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (screen !== "intro") return;
+    if (screen !== "intro" || hasSeenIntro) return;
     setIntroLines([]);
     setIntroReady(false);
     lineTimers.current.forEach(clearTimeout);
     lineTimers.current = [];
-    INTRO_LINES.forEach((line, i) => {
+    INTRO_LINES_ANIMATED.forEach((line, i) => {
       const t = setTimeout(
         () => {
           setIntroLines((p) => [...p, line]);
-          if (i === INTRO_LINES.length - 1) setIntroReady(true);
+          if (i === INTRO_LINES_ANIMATED.length - 1) setIntroReady(true);
         },
-        120 * i + (i > 3 ? 200 : 0),
+        120 * i + (i > 1 ? 200 : 0),
       );
       lineTimers.current.push(t);
     });
     return () => lineTimers.current.forEach(clearTimeout);
-  }, [screen]);
+  }, [screen, hasSeenIntro]);
 
-  // ── Archive state ────────────────────────────────────────────────
+  // ── Archive state ─────────────────────────────────────────────────
   const [visited, setVisited] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
   const [noteVisible, setNoteVisible] = useState(false);
@@ -128,12 +112,17 @@ export default function App() {
     [markVisited],
   );
 
-  // ── Survey state ─────────────────────────────────────────────────
+  // ── Survey state ──────────────────────────────────────────────────
   const [surveyStep, setSurveyStep] = useState(0);
   const [surveyOptionCursor, setSurveyOptionCursor] = useState(0);
   const [surveyAnswers, setSurveyAnswers] = useState<number[]>([]);
   const [surveyResult, setSurveyResult] = useState<SurveyResult | null>(null);
   const [resultSpeaker, setResultSpeaker] = useState<Speaker | null>(null);
+
+  const goToIntro = useCallback(() => {
+    setHasSeenIntro(true);
+    setScreen("intro");
+  }, []);
 
   const startSurvey = useCallback(() => {
     setSurveyStep(0);
@@ -162,7 +151,7 @@ export default function App() {
     }
   }, [surveyStep, surveyOptionCursor, surveyAnswers]);
 
-  // ── Keyboard ──────────────────────────────────────────────────────
+  // ── Keyboard ───────────────────────────────────────────────────────
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleKey = useCallback(
@@ -172,7 +161,16 @@ export default function App() {
         return;
       }
 
-      if (screen === "intro" && introReady) {
+      if (screen === "splash1") {
+        if (e.key === "Enter") setScreen("splash2");
+        return;
+      }
+      if (screen === "splash2") {
+        if (e.key === "Enter") setScreen("intro");
+        return;
+      }
+      if (screen === "intro") {
+        if (!hasSeenIntro && !introReady) return; // still animating
         if (e.key === "ArrowUp") setIntroCursor((c) => (c - 1 + 2) % 2);
         else if (e.key === "ArrowDown") setIntroCursor((c) => (c + 1) % 2);
         else if (e.key === "Enter") {
@@ -189,7 +187,7 @@ export default function App() {
           setSelectedQ(QUESTIONS[qCursor]);
           setSCursor(0);
           setScreen("speakers");
-        } else if (e.key === "Escape") setScreen("intro");
+        } else if (e.key === "Escape") goToIntro();
         return;
       }
       if (screen === "speakers") {
@@ -218,17 +216,18 @@ export default function App() {
         else if (e.key === "ArrowDown")
           setSurveyOptionCursor((c) => (c + 1) % n);
         else if (e.key === "Enter") confirmSurveyOption();
-        else if (e.key === "Escape") setScreen("intro");
+        else if (e.key === "Escape") goToIntro();
         return;
       }
       if (screen === "result") {
-        if (e.key === "Escape") setScreen("intro");
+        if (e.key === "Escape") goToIntro();
         return;
       }
     },
     [
       screen,
       introReady,
+      hasSeenIntro,
       introCursor,
       qCursor,
       sCursor,
@@ -238,6 +237,7 @@ export default function App() {
       startSurvey,
       confirmSurveyOption,
       markVisited,
+      goToIntro,
     ],
   );
 
@@ -249,7 +249,6 @@ export default function App() {
     containerRef.current?.focus();
   }, [screen]);
 
-  // ── Render ────────────────────────────────────────────────────────
   const hasXref = screen === "answer" || screen === "all";
 
   return (
@@ -282,7 +281,6 @@ export default function App() {
           overflow: "hidden",
         }}
       >
-        {/* scanlines */}
         <div
           style={{
             position: "absolute",
@@ -297,12 +295,22 @@ export default function App() {
           }}
         />
 
+        {(screen === "splash1" || screen === "splash2") && (
+          <SplashScreen
+            page={screen === "splash1" ? 1 : 2}
+            onNext={() =>
+              screen === "splash1" ? setScreen("splash2") : setScreen("intro")
+            }
+          />
+        )}
+
         {screen === "intro" && (
           <IntroScreen
             introLines={introLines}
             introReady={introReady}
             introCursor={introCursor}
             blink={blink}
+            skipAnimation={hasSeenIntro}
             setIntroCursor={setIntroCursor}
             onEnterArchive={() => setScreen("questions")}
             onTakeSurvey={startSurvey}
@@ -320,7 +328,7 @@ export default function App() {
               setSCursor(0);
               setScreen("speakers");
             }}
-            onBack={() => setScreen("intro")}
+            onBack={goToIntro}
           />
         )}
 
