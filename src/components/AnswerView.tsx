@@ -1,6 +1,6 @@
 import React from "react";
-import {
-  SILENCE,
+import { SILENCE } from "../data/types";
+import type {
   AnswerLine,
   AnswerLines,
   RedactedSegment,
