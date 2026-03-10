@@ -109,7 +109,6 @@ export default function IntroScreen({
     const allLines = [
       { text: "─────────────────────────────────────────────", dim: false },
       ...SPLASH_LINES.map((l) => ({ text: l, dim: true })),
-      { text: "─────────────────────────────────────────────", dim: false },
       { text: "", dim: false },
       {
         text: "I interviewed seven people three years after it went commercial — different jobs, different circumstances, different positions in the system.",
