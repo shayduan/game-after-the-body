@@ -106,6 +106,28 @@ export default function IntroScreen({
 
   // — Skip animation: returning user, show everything at once —
   if (skipAnimation) {
+    const allLines = [
+      ...SPLASH_LINES.map((l) => ({ text: l, dim: true })),
+      { text: "─────────────────────────────────────────────", dim: false },
+      { text: "", dim: false },
+      {
+        text: "I interviewed seven people three years after it went commercial — different jobs, different circumstances, different positions in the system.",
+        dim: false,
+      },
+      { text: "", dim: false },
+      {
+        text: "Each got the same nine questions. Each had the right not to answer.",
+        dim: false,
+      },
+      { text: "", dim: false },
+      {
+        text: "This interview script was banned and never published.",
+        dim: false,
+      },
+      { text: "What you see here is the archive.", dim: false },
+      { text: "", dim: false },
+      { text: "─────────────────────────────────────────────", dim: false },
+    ];
     return (
       <div>
         <div
@@ -143,82 +165,25 @@ export default function IntroScreen({
         >
           {SUB}
         </div>
-
-        {/* Splash text — dimmed */}
-        <div
-          style={{ color: "#2a4a2a", ...C, marginBottom: 20, letterSpacing: 1 }}
-        >
-          ─────────────────────────────────────────────
-        </div>
-        {SPLASH_LINES.map((line, i) => (
+        {allLines.map((line, i) => (
           <div
             key={i}
             style={{
-              color: "#4a6a4a",
-              fontSize: 11,
+              color: line.text.startsWith("─")
+                ? "#333"
+                : line.dim
+                  ? "#4a6a4a"
+                  : "#b0c090",
+              fontSize: 13,
               lineHeight: 1.9,
-              maxWidth: 520,
+              maxWidth: 560,
               margin: "0 auto",
               ...C,
             }}
           >
-            {line}
+            {line.text || "\u00a0"}
           </div>
         ))}
-
-        {/* Intro divider */}
-        <div
-          style={{
-            color: "#2a4a2a",
-            ...C,
-            margin: "20px auto",
-            letterSpacing: 1,
-          }}
-        >
-          ─────────────────────────────────────────────
-        </div>
-
-        {/* Intro text — two paragraphs, no mid-sentence breaks */}
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
-          <p
-            style={{
-              color: "#b0c090",
-              fontSize: 13,
-              lineHeight: 1.9,
-              ...C,
-              margin: "0 0 16px 0",
-            }}
-          >
-            I interviewed seven people three years after it went commercial —
-            different jobs, different circumstances, different positions in the
-            system.
-          </p>
-          <p
-            style={{
-              color: "#b0c090",
-              fontSize: 13,
-              lineHeight: 1.9,
-              ...C,
-              margin: "0 0 4px 0",
-            }}
-          >
-            Each got the same nine questions. Each had the right not to answer.
-          </p>
-          <p
-            style={{
-              color: "#b0c090",
-              fontSize: 13,
-              lineHeight: 1.9,
-              ...C,
-              margin: "16px 0 0 0",
-            }}
-          >
-            This interview script was banned and never published.
-            <br />
-            What you see here is the archive.
-          </p>
-        </div>
-
         {renderMenu()}
       </div>
     );
@@ -272,8 +237,8 @@ export default function IntroScreen({
             style={{
               color: isDivider ? "#333" : "#b0c090",
               fontSize: 13,
-              lineHeight: isDivider ? 1.4 : 1.9,
-              maxWidth: isDivider ? "100%" : 560,
+              lineHeight: 1.9,
+              maxWidth: 560,
               margin: "0 auto",
               ...C,
             }}
