@@ -21,14 +21,17 @@ export default function XrefPanel({ panel, onClose, onJump }: Props) {
   if (!xref) return null;
 
   const base: React.CSSProperties = {
-    position: "absolute",
+    position: "fixed",
     bottom: 0,
-    left: 0,
-    right: 0,
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "100%",
+    maxWidth: 760,
     background: "#080d08",
     borderTop: "1px solid #1a3a1a",
     padding: "14px 40px 18px",
-    zIndex: 20,
+    zIndex: 100,
+    boxSizing: "border-box",
   };
 
   const header = (
