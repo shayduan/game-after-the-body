@@ -6,7 +6,7 @@ const SUB = "An Interview in Seven Voices";
 const AUTHOR = "Shay Duan  ·  03/2026";
 
 const SPLASH_LINES = [
-  "Uterine replication technology matured in laboratory conditions about two decades ago.",
+  "Uterine replication technology matured in laboratory conditions two decades ago.",
   "Three years ago, a commercial product called the ExoGestation System received regulatory approval. It is now part of seventeen national healthcare systems.",
 ];
 
@@ -107,6 +107,7 @@ export default function IntroScreen({
   // — Skip animation: returning user, show everything at once —
   if (skipAnimation) {
     const allLines = [
+      { text: "", dim: false },
       { text: "─────────────────────────────────────────────", dim: false },
       ...SPLASH_LINES.map((l) => ({ text: l, dim: true })),
       { text: "", dim: false },
