@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CROSSREFS } from "../data/crossrefs";
 import { SPEAKERS } from "../data/speakers";
 import { hexToRgba, dimColor } from "../utils";
@@ -17,16 +17,25 @@ type Props = {
 };
 
 export default function XrefPanel({ panel, onClose, onJump }: Props) {
+  const [scrollY, setScrollY] = useState(() => window.scrollY);
+
+  useEffect(() => {
+    if (!panel) return;
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [panel]);
+
   if (!panel) return null;
   const xref = CROSSREFS[panel.keyword];
   if (!xref) return null;
 
-  // Position just below the clicked word, but clamp so it doesn't overflow viewport
+  // anchorY is pageY (absolute), subtract current scrollY to get current viewport position
   const PANEL_HEIGHT = 180;
   const OFFSET = 20;
-  const rawTop = panel.anchorY + OFFSET;
+  const rawTop = panel.anchorY - scrollY + OFFSET;
   const maxTop = window.innerHeight - PANEL_HEIGHT - 16;
-  const top = Math.min(rawTop, maxTop);
+  const top = Math.min(Math.max(rawTop, 60), maxTop);
 
   const base: React.CSSProperties = {
     position: "fixed",

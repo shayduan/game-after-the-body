@@ -97,7 +97,7 @@ export default function App() {
           keyword,
           fromSpeakerId: speakerId,
           fromQId: questionId,
-          anchorY: clientY,
+          anchorY: clientY + window.scrollY,
         });
     },
     [],
