@@ -7,6 +7,7 @@ export type XrefPanelState = {
   keyword: string;
   fromSpeakerId: string;
   fromQId: number;
+  anchorY: number; // clientY of the click
 } | null;
 
 type Props = {
@@ -20,18 +21,28 @@ export default function XrefPanel({ panel, onClose, onJump }: Props) {
   const xref = CROSSREFS[panel.keyword];
   if (!xref) return null;
 
+  // Position just below the clicked word, but clamp so it doesn't overflow viewport
+  const PANEL_HEIGHT = 180;
+  const OFFSET = 20;
+  const rawTop = panel.anchorY + OFFSET;
+  const maxTop = window.innerHeight - PANEL_HEIGHT - 16;
+  const top = Math.min(rawTop, maxTop);
+
   const base: React.CSSProperties = {
     position: "fixed",
-    bottom: 0,
+    top,
     left: "50%",
     transform: "translateX(-50%)",
     width: "100%",
     maxWidth: 760,
     background: "#080d08",
     borderTop: "1px solid #1a3a1a",
+    border: "1px solid #1a3a1a",
+    borderRadius: 2,
     padding: "14px 40px 18px",
     zIndex: 100,
-    boxSizing: "border-box",
+    boxSizing: "border-box" as const,
+    boxShadow: "0 4px 24px rgba(0,0,0,0.7)",
   };
 
   const header = (

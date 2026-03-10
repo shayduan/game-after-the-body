@@ -1,6 +1,6 @@
 import React from "react";
-import { SILENCE } from "../data/types";
-import type {
+import {
+  SILENCE,
   AnswerLine,
   AnswerLines,
   RedactedSegment,
@@ -24,7 +24,12 @@ type Props = {
   selectedS?: Speaker | null;
   revealed: Set<string>;
   onToggleReveal: (id: string) => void;
-  onXrefClick: (keyword: string, speakerId: string, questionId: number) => void;
+  onXrefClick: (
+    keyword: string,
+    speakerId: string,
+    questionId: number,
+    clientY: number,
+  ) => void;
   onBack: () => void;
 };
 
@@ -74,7 +79,12 @@ function PlainText({
   speakerId: string;
   questionId: number;
   activeKeywords: string[];
-  onXrefClick: (keyword: string, speakerId: string, questionId: number) => void;
+  onXrefClick: (
+    keyword: string,
+    speakerId: string,
+    questionId: number,
+    clientY: number,
+  ) => void;
 }) {
   const parts = splitText(text, activeKeywords);
   return (
@@ -83,7 +93,10 @@ function PlainText({
         p.keyword ? (
           <span
             key={i}
-            onClick={() => onXrefClick(p.keyword!, speakerId, questionId)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onXrefClick(p.keyword!, speakerId, questionId, e.clientY);
+            }}
             title={`cross-reference: ${p.keyword}`}
             style={{
               borderBottom: `1px dotted ${hexToRgba(speakerColor, 0.6)}`,
@@ -119,7 +132,12 @@ function RenderLine({
   activeKeywords: string[];
   revealed: Set<string>;
   onToggleReveal: (id: string) => void;
-  onXrefClick: (keyword: string, speakerId: string, questionId: number) => void;
+  onXrefClick: (
+    keyword: string,
+    speakerId: string,
+    questionId: number,
+    clientY: number,
+  ) => void;
 }) {
   if (line === SILENCE)
     return (
@@ -200,7 +218,12 @@ function SpeakerAnswerBlock({
   lines: AnswerLines;
   revealed: Set<string>;
   onToggleReveal: (id: string) => void;
-  onXrefClick: (keyword: string, speakerId: string, questionId: number) => void;
+  onXrefClick: (
+    keyword: string,
+    speakerId: string,
+    questionId: number,
+    clientY: number,
+  ) => void;
 }) {
   const bodyColor = dimColor(speaker.color, 0.92);
   const activeKeywords = ANSWER_XREFS[speaker.id]?.[`q${questionId}`] || [];

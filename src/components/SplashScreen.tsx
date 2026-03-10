@@ -12,7 +12,7 @@ const AUTHOR = "Shay Duan  ·  03/2026";
 
 const TEXT: Record<1 | 2, string> = {
   1: "Uterine replication technology matured in laboratory conditions about two decades ago.",
-  2: "3 years ago, a commercial product called the ExoGestation System received regulatory approval. It is now part of 17 national healthcare systems.",
+  2: "Three years ago, a commercial product called the ExoGestation System received regulatory approval. It is now part of seventeen national healthcare systems.",
 };
 
 export default function SplashScreen({ page, onNext }: Props) {
@@ -30,7 +30,6 @@ export default function SplashScreen({ page, onNext }: Props) {
       >
         {HEADER}
       </div>
-
       <div
         style={{
           color: "#4ade80",
@@ -49,26 +48,34 @@ export default function SplashScreen({ page, onNext }: Props) {
           fontSize: 13,
           letterSpacing: 1,
           lineHeight: 1.9,
-          marginBottom: 48,
+          marginBottom: 36,
           ...C,
         }}
       >
         {SUB}
       </div>
-
       <div
         style={{
-          color: "#b0c090",
-          fontSize: 13,
-          lineHeight: 2,
-          maxWidth: 480,
+          color: "#2a4a2a",
+          textAlign: "center",
+          marginBottom: 28,
+          letterSpacing: 1,
+        }}
+      >
+        ─────────────────────────────────────────────
+      </div>
+      <div
+        style={{
+          color: "#4a6a4a",
+          fontSize: 11,
+          lineHeight: 1.9,
+          maxWidth: 520,
           margin: "0 auto 56px auto",
           ...C,
         }}
       >
         {TEXT[page]}
       </div>
-
       <div
         style={{
           color: "#3a5a3a",
@@ -80,7 +87,6 @@ export default function SplashScreen({ page, onNext }: Props) {
       >
         PRESS ENTER TO CONTINUE
       </div>
-
       <div style={{ color: "#2a3a2a", fontSize: 10, ...C }}>{AUTHOR}</div>
     </div>
   );

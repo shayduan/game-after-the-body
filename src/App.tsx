@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import type { Screen, Speaker, Question, SurveyResult } from "./data/types";
+import { Screen, Speaker, Question, SurveyResult } from "./data/types";
 import { SPEAKERS } from "./data/speakers";
 import { QUESTIONS } from "./data/questions";
 import {
@@ -15,7 +15,7 @@ import IntroScreen, { INTRO_LINES_ANIMATED } from "./components/IntroScreen";
 import QuestionsScreen from "./components/QuestionsScreen";
 import SpeakersScreen from "./components/SpeakersScreen";
 import AnswerView from "./components/AnswerView";
-import XrefPanel, { type XrefPanelState } from "./components/XrefPanel";
+import XrefPanel, { XrefPanelState } from "./components/XrefPanel";
 import SurveyScreen from "./components/SurveyScreen";
 import ResultScreen from "./components/ResultScreen";
 
@@ -86,12 +86,18 @@ export default function App() {
   }, []);
 
   const handleXrefClick = useCallback(
-    (keyword: string, speakerId: string, questionId: number) => {
+    (
+      keyword: string,
+      speakerId: string,
+      questionId: number,
+      clientY: number,
+    ) => {
       if (CROSSREFS[keyword])
         setXrefPanel({
           keyword,
           fromSpeakerId: speakerId,
           fromQId: questionId,
+          anchorY: clientY,
         });
     },
     [],
