@@ -30,6 +30,7 @@ export default function SplashScreen({ page, onNext }: Props) {
       >
         {HEADER}
       </div>
+
       <div
         style={{
           color: "#4ade80",
@@ -48,34 +49,26 @@ export default function SplashScreen({ page, onNext }: Props) {
           fontSize: 13,
           letterSpacing: 1,
           lineHeight: 1.9,
-          marginBottom: 36,
+          marginBottom: 48,
           ...C,
         }}
       >
         {SUB}
       </div>
+
       <div
         style={{
-          color: "#2a4a2a",
-          textAlign: "center",
-          marginBottom: 28,
-          letterSpacing: 1,
-        }}
-      >
-        ─────────────────────────────────────────────
-      </div>
-      <div
-        style={{
-          color: "#4a6a4a",
-          fontSize: 11,
-          lineHeight: 1.9,
-          maxWidth: 520,
+          color: "#b0c090",
+          fontSize: 13,
+          lineHeight: 2,
+          maxWidth: 480,
           margin: "0 auto 56px auto",
           ...C,
         }}
       >
         {TEXT[page]}
       </div>
+
       <div
         style={{
           color: "#3a5a3a",
@@ -87,6 +80,7 @@ export default function SplashScreen({ page, onNext }: Props) {
       >
         PRESS ENTER TO CONTINUE
       </div>
+
       <div style={{ color: "#2a3a2a", fontSize: 10, ...C }}>{AUTHOR}</div>
     </div>
   );
