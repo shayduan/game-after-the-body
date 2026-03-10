@@ -108,7 +108,7 @@ export default function IntroScreen({
   if (skipAnimation) {
     const allLines = [
       { text: "─────────────────────────────────────────────", dim: false },
-      ...SPLASH_LINES.map((l) => ({ text: l, dim: false })),
+      ...SPLASH_LINES.map((l) => ({ text: l, dim: true })),
       { text: "─────────────────────────────────────────────", dim: false },
       { text: "", dim: false },
       {
@@ -175,7 +175,7 @@ export default function IntroScreen({
                 : line.dim
                   ? "#4a6a4a"
                   : "#b0c090",
-              fontSize: 13,
+              fontSize: line.dim ? 11 : 13,
               lineHeight: 1.9,
               maxWidth: 560,
               margin: "0 auto",
